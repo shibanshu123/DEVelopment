@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %} Sasta Contact {% endblock %}
+
+{% block body %} 
+<style>
+    .contact{
+        min-height: 100vh;
+        min-width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .btn{
+        cursor: pointer;
+    }
+</style>
+
+<div class="contact">
+    <form>
+        <!-- This name func will be helpful in getting data at flask app -->
+        <input type="text" placeholder="Name" name="nm">  
+        <input type="email" placeholder="Email" name="em">
+        <input type="password" placeholder="Password" name="pw"> 
+        <input class="btn" onclick="send_data()">
+            Submit
+        </div>
+    </form>
+</div>
+
+<script>
+
+    function send_data(){
+        console.log('click');
+        // Value that I want to send
+        new_freq ={
+            'nm' : $('input[name="nm"]').val(),
+            'em' : $('input[name="em"]').val(),
+            'pw' : $('input[name="pw"]').val(),
+
+        } 
+
+        // Sending
+        $.ajax({ 
+            url: '/contact', 
+            type: 'POST', 
+            data: new_freq
+        }).done((data)=>{
+            console.log(data);
+        })
+    }    
+</script>
+
+{% endblock %}
+
